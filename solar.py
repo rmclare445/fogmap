@@ -17,7 +17,7 @@ def irradiation(n, t):
     B = (n - 1) * 360/365.
     E = 229.2 * (7.5e-5 + 1.868e-3 * np.cos(B) - 3.2077e-2 * np.sin(B) \
                  - 1.4615e-2 * np.cos(2*B) - 4.089e-2 * np.sin(2*B))
-    tS = t + (4 * (lon - tz_lon) + E) / 60.
+    tS = t[3] + (t[4]/60.) + (4 * (lon - tz_lon) + E) / 60.
     omega = np.deg2rad(15. * (tS - 12.))
     
     # Sun altitude

@@ -10,14 +10,10 @@ t = time.localtime()
 doy = days.day_of_year(t[0], t[1], t[2])
 #doy = days.day_of_year(t[0], 4, 15)
 print(doy)
-
-# Time with fractional minutes
-t_frac = t[3] + (t[4]/60.)
-#t_frac = 12.
-print(t[3], ":", t[4])
+print(t[3], ":", (t[4]/60.))
 
 # Estimate solar irradiance by time of year
-I = solar.irradiation(doy, t_frac)
+I = solar.irradiation(doy, t)
 print(I)
 
 #           Asilomar        PG HS         Lovers Pt.    New Monterey   Old Town Mont.  Carmel
