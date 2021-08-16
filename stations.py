@@ -7,8 +7,7 @@ def station_scan( driver, I ):
     
     # Read namelist, get 'stations'
     stream = open( "namelist.yaml", 'r' )
-    dictionary = yaml.safe_load( stream )
-    stations = dictionary['stations']
+    stations = yaml.safe_load( stream )['stations']
     
     # Cycle thru stations, access dashboards, get solar radiation
     for st in stations:

@@ -4,7 +4,7 @@ def day_of_year(year, month, day):
     
     dim = days_in_month
     if year%4 == 0:
-        dim[1] = 28 
+        dim[1] = 29 
         
     if month > 1:
         predays = sum(dim[:month-1])

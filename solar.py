@@ -11,8 +11,11 @@ lon = -121.92
 #  where n = number day of year and t = fractional local time.
 def irradiation(n, t):
     
+    # Days in year
+    diy = 366. if (t[0]%4 == 0) else 365.
+    
     # Declination angle (delta)
-    dec_ang = np.deg2rad(23.44 * np.sin(np.deg2rad(360 * (284+n) / 365.)))
+    dec_ang = np.deg2rad(23.44 * np.sin(np.deg2rad(360 * (284+n) / diy)))
     
     # Hour angle (omega)
     tz_lon = -120.
