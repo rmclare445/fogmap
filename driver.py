@@ -8,13 +8,13 @@ from selenium import webdriver
 t = time.localtime()
 
 # Calculate which day of the year from y/m/d
-doy = days.day_of_year(t[0], t[1], t[2])
-#doy = days.day_of_year(t[0], 4, 15)
-print(doy)
+n = days.day_of_year(t[0], t[1], t[2])
+#n = days.day_of_year(t[0], 4, 15)
+print(n)
 print(t[3], ":", (t[4]/60.))
 
 # Estimate solar irradiance by time of year
-I = solar.irradiation(doy, t)
+I = solar.irradiation(n, t)
 print(I)
 
 # Set up browser connection

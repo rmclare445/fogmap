@@ -7,6 +7,8 @@ Gsc = 1367.
 lat = np.deg2rad(36.62)
 lon = -121.92
 
+# Calculate the hypothetical clear day insolation at (lat,lon) at a time(n, t)
+#  where n = number day of year and t = fractional local time.
 def irradiation(n, t):
     
     # Declination angle (delta)
