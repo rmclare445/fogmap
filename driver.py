@@ -1,5 +1,4 @@
 import time
-import days
 import solar
 import stations
 from selenium import webdriver
@@ -8,8 +7,8 @@ from selenium import webdriver
 t = time.localtime( )
 
 # Calculate which day of the year from y/m/d
-n = days.day_of_year( t[0], t[1], t[2] )
-#n = days.day_of_year( t[0], 4, 15 )
+n = solar.day_of_year( t[0], t[1], t[2] )
+#n = solar.day_of_year( t[0], 4, 15 )
 print( n )
 print( t[3], ":", (t[4]/60.) )
 
