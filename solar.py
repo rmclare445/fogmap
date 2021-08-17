@@ -1,15 +1,17 @@
 import numpy as np
+import read_nl as nl
 
 # Solar constant
 Gsc = 1367.
 
-# Pacific Grove
-lat = np.deg2rad(36.62)
-lon = -121.92
-
 # Calculate the hypothetical clear day insolation at (lat,lon) at a time(n, t)
 #  where n = number day of year and t = fractional local time.
 def irradiation(n, t):
+    
+    # Read namelist, get lat/lon
+    nml = nl.read_nl( )
+    lat = np.deg2rad(nml['latitude'])
+    lon = nml['longitude']
     
     # Days in year
     diy = 366. if (t[0]%4 == 0) else 365.

@@ -1,4 +1,4 @@
-import yaml
+import read_nl as nl
 
 # Xpath to solar radiation on Weather Underground station dashboard page
 sol_rad_xpath = '/html/body/app-root/app-dashboard/one-column-layout/wu-header/sidenav/mat-sidenav-container/mat-sidenav-content/div/section/section[1]/div[1]/div/section/div/div/div/div[10]/div/lib-tile-solar-radiation/div/div[2]/div/div[2]/div/div[2]'
@@ -6,8 +6,7 @@ sol_rad_xpath = '/html/body/app-root/app-dashboard/one-column-layout/wu-header/s
 def station_scan( driver, I ):
     
     # Read namelist, get 'stations'
-    stream = open( "namelist.yaml", 'r' )
-    stations = yaml.safe_load( stream )['stations']
+    stations = nl.read_nl( )['stations']
     
     # Cycle thru stations, access dashboards, get solar radiation
     for st in stations:
