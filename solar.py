@@ -66,10 +66,10 @@ def irradiation( n, t ):
     k  = rk * (0.2711 + 0.01858 * (2.5 - A)**2)
     Tb = a0 + a1 * np.e**(-k/np.cos(thetaZ))
     Gcb = Tb * Gon * K
-
+    
     # Diffuse radiation
     Td = 0.271 - 0.294 * Tb
     Gcd = Td * Gon * K
-
+    
     # Total radiation
     return Gcb + Gcd
