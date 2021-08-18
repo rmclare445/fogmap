@@ -16,10 +16,13 @@ print( t[3], ":", (t[4]/60.) )
 I = solar.irradiation( n, t )
 print( I )
 
-# Set up browser connection
-options = webdriver.firefox.options.Options( )
-options.add_argument( '--headless' )
-driver = webdriver.Firefox(executable_path=r'C:\Users\Ryan\Documents\GitHub\investment-interface\geckodriver.exe', options=options)
-
-# Scan through stations and give insolation metrics
-stations.station_scan( driver, I )
+try:
+    # Set up browser connection
+    options = webdriver.firefox.options.Options( )
+    options.add_argument( '--headless' )
+    driver = webdriver.Firefox(executable_path=r'C:\Users\Ryan\Documents\GitHub\investment-interface\geckodriver.exe', options=options)
+    
+    # Scan through stations and give insolation metrics
+    stations.station_scan( driver, I )
+except:
+    pass
