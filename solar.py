@@ -24,7 +24,10 @@ def day_of_year( year, month, day ):
 
 # Calculate the hypothetical clear day insolation at (lat,lon) at a time(n, t)
 #  where n = number day of year and t = fractional local time.
-def irradiation( n, t ):
+def irradiation( t ):
+    
+    # Calculate which day of the year from y/m/d
+    n = day_of_year( t[0], t[1], t[2] )
     
     # Read namelist, get lat/lon
     nml = nl.read_nl( )

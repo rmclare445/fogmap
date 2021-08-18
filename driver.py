@@ -7,13 +7,8 @@ def update( ):
     # Retrieve current time
     t = time.localtime( )
     
-    # Calculate which day of the year from y/m/d
-    n = solar.day_of_year( t[0], t[1], t[2] )
-    #n = solar.day_of_year( t[0], 4, 15 )
-    print( n )
-    
     # Estimate solar irradiance by time of year
-    I = solar.irradiation( n, t )
+    I = solar.irradiation( t )
     print( I )
     
     try:
