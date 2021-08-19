@@ -11,6 +11,10 @@ def update( ):
     I = solar.irradiation( t )
     print( I )
     
+    # Don't check after sunset or before sunrise
+    if I <= 0.:
+        return
+    
     try:
         # Set up browser connection
         options = webdriver.firefox.options.Options( )
