@@ -1,9 +1,11 @@
 import read_nl as nl
+from urllib.request import Request, urlopen
 
-# Xpath to solar radiation on Weather Underground station dashboard page
-sol_rad_xpath = '/html/body/app-root/app-dashboard/one-column-layout/wu-header/sidenav/mat-sidenav-container/mat-sidenav-content/div/section/section[1]/div[1]/div/section/div/div/div/div[10]/div/lib-tile-solar-radiation/div/div[2]/div/div[2]/div/div[2]'
+# Header definitions for urllib Request
+web_headers = {'User-Agent': 'Mozilla/5.0'}
 
-def station_scan( driver, I ):
+def station_scan( I ):
+    # Get data and calculate insolation metrics
     
     # Read namelist, get 'stations'
     stations = nl.read_nl( )['stations']
@@ -13,14 +15,14 @@ def station_scan( driver, I ):
         print( st )
         
         try:
-            # Retrieve webpage
-            driver.get( "https://www.wunderground.com/dashboard/pws/%s" % st )
+            # Retrieve raw webpage bytes
+            station_url = "https://www.wunderground.com/dashboard/pws/%s" % st
+            req = Request( station_url, headers = web_headers )
+            webpage = urlopen( req ).read()
             
-            # Retrieve solar radiation quantity
-            content = driver.find_element_by_xpath( sol_rad_xpath )
-            print( content.text )
-            I_wu = float( content.text[:-8] )
-            print( I_wu )
+            # Get solar radiation data from webpage
+            I_wu = get_radiation( webpage )
+            print(I_wu)
             
             # Crude estimate of whether the sun is out
             if I_wu > max( 0.7 * I, 250. ):
@@ -39,3 +41,11 @@ def station_scan( driver, I ):
         
         except:
             print( "Unable to retrieve station data." )
+            
+def get_radiation( webpage ):
+    sol_unit = webpage.find(b"watts/m")
+    content = webpage[sol_unit-9:sol_unit].decode()
+    return float(content[content.find(">")+1:]) 
+    
+if __name__ == "__main__":
+    station_scan( 900. )
