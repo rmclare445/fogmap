@@ -9,37 +9,37 @@ days_in_month = [31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]
 
 # Determine the number of days from January 1st by day of year
 def day_of_year( year, month, day ):
-    
+
     # Account for leap years
     dim = days_in_month
     if year%4 == 0:
-        dim[1] = 29 
-    
+        dim[1] = 29
+
     # Get number of days before given month
     predays = 0
     if month > 1:
         predays = sum( dim[:month-1] )
-        
+
     return predays + day
 
 # Calculate the hypothetical clear day insolation at (lat,lon) at a time(n, t)
 #  where n = number day of year and t = fractional local time.
 def irradiation( t ):
-    
+
     # Calculate which day of the year from y/m/d
     n = day_of_year( t[0], t[1], t[2] )
-    
+
     # Read namelist, get lat/lon
     nml = nl.read_nl( )
     lat = np.deg2rad( nml['latitude'] )
     lon = nml['longitude']
-    
+
     # Days in year
     diy = 366. if (t[0]%4 == 0) else 365.
-    
+
     # Declination angle (delta)
     dec_ang = np.deg2rad(23.44 * np.sin(np.deg2rad(360 * (284+n) / diy)))
-    
+
     # Hour angle (omega)
     tz_lon = -120.
     B = (n - 1) * 360/365.
@@ -47,21 +47,21 @@ def irradiation( t ):
                  - 1.4615e-2 * np.cos(2*B) - 4.089e-2 * np.sin(2*B))
     tS = t[3] + (t[4]/60.) + (4 * (lon - tz_lon) + E) / 60.
     omega = np.deg2rad(15. * (tS - 12.))
-    
+
     # Sun altitude
     K = np.cos(lat)*np.cos(dec_ang)*np.cos(omega) + np.sin(lat)*np.sin(dec_ang)
     #hs = np.arcsin(K)
-    
+
     # Solar azimuth
     #gamma = np.arcsin(np.cos(dec_ang)*np.sin(omega)/np.cos(hs))
-    
+
     # Zenith angle
     thetaZ = np.arccos(K)
-    
+
     # Irradiation incident TOA at theta = 0
     Gon = Gsc * (1. + 0.033 * np.cos(np.deg2rad(360*n/365.)))
     #Go = Gon * K
-    
+
     # Beam radiation
     r0, r1, rk, A = 0.97, 0.99, 1.02, 0.
     a0 = r0 * (0.4237 - 0.00821 * (6 - A)**2)
@@ -69,10 +69,10 @@ def irradiation( t ):
     k  = rk * (0.2711 + 0.01858 * (2.5 - A)**2)
     Tb = a0 + a1 * np.e**(-k/np.cos(thetaZ))
     Gcb = Tb * Gon * K
-    
+
     # Diffuse radiation
     Td = 0.271 - 0.294 * Tb
     Gcd = Td * Gon * K
-    
-    # Total radiation
-    return Gcb + Gcd
+
+    # Total radiation (at least 1e-9 to avoid dividing by zero)
+    return max(Gcb + Gcd, 1e-9)

@@ -2,7 +2,7 @@
 # General geographical location (decimal lat/lon)
 latitude: 36.62
 longitude: -121.92
-# Which weatherunderground stations to query
+# Which weatherunderground stations to query (in order of series from device)
 stations:
   - "KCAPACIF126"   # Asilomar
   - "KCAPACIF189"   # Pacific Grove High School
