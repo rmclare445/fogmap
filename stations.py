@@ -12,7 +12,7 @@ def station_scan( I ):
     stations = nl.read_nl( )['stations']
     
     # Cycle thru stations, access dashboards, get solar radiation
-    for st in stations:
+    for i, st in enumerate( stations ):
         print( st )
         
         try:
@@ -37,8 +37,7 @@ def station_scan( I ):
             I_tot  = I_wu / 900.
                 
             print( "sun = "    + str(sun) )
-            for i in range(len(stations)):
-                pixel_sun( i, sun)
+            pixel_sun( i, sun)
             print( "I_frac = " + str(I_frac) )
             print( "I_tot  = " + str(I_tot) )
         
