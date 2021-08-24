@@ -1,3 +1,4 @@
+from pixel import *
 import read_nl as nl
 from urllib.request import Request, urlopen
 
@@ -36,6 +37,8 @@ def station_scan( I ):
             I_tot  = I_wu / 900.
                 
             print( "sun = "    + str(sun) )
+            for i in range(len(stations)):
+                pixel_sun( i, sun)
             print( "I_frac = " + str(I_frac) )
             print( "I_tot  = " + str(I_tot) )
         
