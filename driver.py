@@ -12,7 +12,7 @@ def update( ):
     print( I )
 
     # Don't check after sunset or before sunrise
-    if I == 1e-9:
+    if I <= 0:
         pixel_clear( )
         time.sleep(600)
         return

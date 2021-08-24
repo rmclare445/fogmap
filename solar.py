@@ -75,4 +75,4 @@ def irradiation( t ):
     Gcd = Td * Gon * K
 
     # Total radiation (at least 1e-9 to avoid dividing by zero)
-    return max(Gcb + Gcd, 1e-9)
+    return Gcb + Gcd
